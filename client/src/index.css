@@ -1,0 +1,127 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: hsl(0, 0%, 100%);
+  --foreground: hsl(20, 14.3%, 4.1%);
+  --muted: hsl(60, 4.8%, 95.9%);
+  --muted-foreground: hsl(25, 5.3%, 44.7%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(20, 14.3%, 4.1%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(20, 14.3%, 4.1%);
+  --border: hsl(20, 5.9%, 90%);
+  --input: hsl(20, 5.9%, 90%);
+  --primary: hsl(247, 89%, 67%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(60, 4.8%, 95.9%);
+  --secondary-foreground: hsl(24, 9.8%, 10%);
+  --accent: hsl(60, 4.8%, 95.9%);
+  --accent-foreground: hsl(24, 9.8%, 10%);
+  --destructive: hsl(0, 84.2%, 60.2%);
+  --destructive-foreground: hsl(60, 9.1%, 97.8%);
+  --ring: hsl(20, 14.3%, 4.1%);
+  --radius: 0.5rem;
+  
+  /* Custom variables for the prototype */
+  --ref-tag: hsl(271, 76%, 53%);
+  --ref-mod-tag: hsl(22, 92%, 50%);
+  --border-color: hsl(220, 13%, 91%);
+  --bg-panel: hsl(210, 20%, 98%);
+}
+
+.dark {
+  --background: hsl(240, 10%, 3.9%);
+  --foreground: hsl(0, 0%, 98%);
+  --muted: hsl(240, 3.7%, 15.9%);
+  --muted-foreground: hsl(240, 5%, 64.9%);
+  --popover: hsl(240, 10%, 3.9%);
+  --popover-foreground: hsl(0, 0%, 98%);
+  --card: hsl(240, 10%, 3.9%);
+  --card-foreground: hsl(0, 0%, 98%);
+  --border: hsl(240, 3.7%, 15.9%);
+  --input: hsl(240, 3.7%, 15.9%);
+  --primary: hsl(247, 89%, 67%);
+  --primary-foreground: hsl(211, 100%, 99%);
+  --secondary: hsl(240, 3.7%, 15.9%);
+  --secondary-foreground: hsl(0, 0%, 98%);
+  --accent: hsl(240, 3.7%, 15.9%);
+  --accent-foreground: hsl(0, 0%, 98%);
+  --destructive: hsl(0, 62.8%, 30.6%);
+  --destructive-foreground: hsl(0, 0%, 98%);
+  --ring: hsl(240, 4.9%, 83.9%);
+  --radius: 0.5rem;
+  
+  --ref-tag: hsl(271, 76%, 53%);
+  --ref-mod-tag: hsl(22, 92%, 50%);
+  --border-color: hsl(240, 3.7%, 15.9%);
+  --bg-panel: hsl(240, 10%, 3.9%);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-background text-foreground;
+  }
+}
+
+@layer components {
+  .ref-tag {
+    background-color: var(--ref-tag);
+    color: white;
+  }
+  
+  .ref-mod-tag {
+    background-color: var(--ref-mod-tag);
+    color: white;
+  }
+  
+  .border-panel {
+    border-color: var(--border-color);
+  }
+  
+  .bg-panel {
+    background-color: var(--bg-panel);
+  }
+  
+  .drag-handle {
+    @apply opacity-0 group-hover:opacity-100 transition-opacity;
+  }
+  
+  .drag-preview {
+    @apply opacity-50;
+  }
+  
+  .drop-zone {
+    @apply border-2 border-dashed border-gray-300 rounded-lg transition-colors;
+  }
+  
+  .drop-zone-active {
+    @apply border-primary bg-primary/5;
+  }
+  
+  .drop-indicator {
+    @apply absolute w-full h-0.5 bg-primary rounded-full opacity-0 transition-all duration-200 z-10;
+    transform: translateY(-50%);
+  }
+  
+  .drop-indicator-active {
+    @apply opacity-100;
+  }
+  
+  .group-drop-target {
+    @apply transition-all duration-200;
+  }
+  
+  .group-drop-target-active {
+    @apply bg-primary/10 border-primary border-2 shadow-md;
+  }
+  
+  .drag-item-preview {
+    @apply opacity-80 rotate-2 shadow-lg;
+  }
+}

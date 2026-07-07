@@ -1,0 +1,13 @@
+{
+  "deployment": {
+    "buildCommand": "./build.sh",
+    "runCommand": "node dist/index.js",
+    "publicDirectory": "dist",
+    "description": "Build script moves files from dist/public to dist root for proper deployment"
+  },
+  "build": {
+    "frontend": "vite build (outputs to dist/public)",
+    "backend": "esbuild server/index.ts (outputs to dist)",
+    "postProcess": "Move files from dist/public/* to dist/ and remove dist/public"
+  }
+}

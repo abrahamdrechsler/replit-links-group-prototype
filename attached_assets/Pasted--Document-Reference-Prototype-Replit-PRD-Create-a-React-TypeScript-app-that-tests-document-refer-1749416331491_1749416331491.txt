@@ -1,0 +1,112 @@
+# Document Reference Prototype - Replit PRD
+
+Create a React TypeScript app that tests document reference behaviors between a parent (CDM) and child (Local) file system.
+
+## Core Concept
+Users can link content from a Central Data Model (CDM) to Local files. When linked, changes in CDM can be pulled to Local, but Local can also modify linked content. We need to test what modifications should be allowed.
+
+## UI Layout (4 panels)
+```
+[Admin Rules] [CDM File] [Local File] [Doc Ref Inspector]
+   (200px)      (40%)       (40%)         (250px)
+```
+
+## Data Structure
+```typescript
+// Each item has:
+{
+  id: string (unique),
+  name: string,
+  type: 'settings_set' | 'group',
+  isLocal: boolean,
+  sourceId?: string, // if linked from CDM
+  items?: string[], // for groups only
+  localOrder?: string[] // for modified groups
+}
+```
+
+## Features to Implement
+
+### 1. Basic Operations (Both Panels)
+- Add Settings Set button (max 10)
+- Create Group from selected items (max 10 groups)
+- Drag & drop to reorder items
+- Right-click menus:
+  - Single item: Rename, Delete
+  - Multiple items: Group, Delete
+  - Group: Ungroup, Rename, Delete
+- Groups show arrow icon and indent children
+
+### 2. Visual Indicators
+- Local panel shows tags on items:
+  - Purple "Ref" tag = linked from CDM
+  - Orange "Ref - Mod" = linked but modified
+  - No tag = local only
+
+### 3. Doc Ref Inspector (Right Panel)
+- Tree view of all CDM items with checkboxes
+- "Pull Selected" button
+- Highlight already-linked items
+- Show "Update Available" when CDM changes
+
+### 4. Admin Rules (Left Panel)
+Three toggle switches:
+1. Allow reordering within doc ref'd groups (default: ON)
+2. Allow deletion within doc ref'd groups (default: OFF)  
+3. Allow adding local items to doc ref'd groups (default: OFF)
+
+### 5. Business Rules
+- **Pulling**: Creates linked copy in Local (isLocal: false, sourceId: CDM.id)
+- **No duplicates**: Check sourceId before creating
+- **Group merge**: If pulling group with already-linked items, move them into group
+- **Updates**: Manual only - user must click "Update" 
+- **Order persistence**: Local reorder persists, new CDM items append to end
+- **Deletion**: CDM deleted items convert to local (don't delete)
+
+### 6. Save/Load
+- Save button → download state as JSON
+- Load button → upload JSON file
+- List recent saves in localStorage
+
+## Key Behaviors to Test
+1. Pull group containing already-linked items → items move into group
+2. Delete CDM item that's in local group → converts to local, moves out
+3. Reorder doc ref'd group locally → maintains order when CDM updates
+4. Admin rules properly restrict operations
+
+## Tech Stack
+- React with TypeScript
+- Vite for build
+- @dnd-kit/sortable for drag-drop
+- Zustand for state
+- lucide-react for icons
+- CSS modules for styling
+
+## Styling
+```css
+:root {
+  --primary: #6366f1;
+  --ref-tag: #8b5cf6;
+  --ref-mod-tag: #f97316;
+  --border: #e5e7eb;
+  --background: #f9fafb;
+}
+```
+
+## Success Criteria
+- All behaviors are deterministic
+- Clear visual feedback
+- No data loss scenarios
+- Works on GitHub Pages (no backend needed)
+
+## Implementation Priority
+1. Layout and basic UI
+2. Add/delete/rename operations
+3. Drag and drop
+4. Doc ref pulling
+5. Update detection
+6. Admin rules
+7. Save/load
+8. Edge cases
+
+Build this as a single-page app where all state is in-memory. No server/database needed.
